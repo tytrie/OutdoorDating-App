@@ -129,11 +129,12 @@ const renderPosts = () => {
     const card = document.createElement("article");
     card.className = "post-card";
     card.dataset.userPost = "true";
+    const postLink = `post.html?title=${encodeURIComponent(post.title)}`;
     card.innerHTML = `
       <div class="post-header">
         <div>
           <h4>${post.title}</h4>
-          <p>${post.when} • ${post.activity}</p>
+          <p>${post.when} • ${post.location}</p>
         </div>
         <span class="post-tag">${post.activity}</span>
       </div>
@@ -143,7 +144,7 @@ const renderPosts = () => {
           <strong>${post.spots} spots open</strong>
           <span>Posted by ${post.author}</span>
         </div>
-        <button class="secondary" data-scroll="#waitlist">Request invite</button>
+        <a class="secondary button-link" href="${postLink}">Open post</a>
       </div>
     `;
     postFeed.prepend(card);
@@ -161,6 +162,7 @@ if (postForm) {
       activity: String(formData.get("activity")),
       when: String(formData.get("when")).trim(),
       spots: String(formData.get("spots")).trim(),
+      location: String(formData.get("location")).trim(),
       details: String(formData.get("details")).trim(),
       author: session.name,
     };
@@ -180,6 +182,7 @@ const renderGroups = () => {
     const card = document.createElement("article");
     card.className = "group-card";
     card.dataset.userGroup = "true";
+    const groupLink = `groups.html?name=${encodeURIComponent(group.name)}`;
     card.innerHTML = `
       <div class="group-header">
         <div>
@@ -194,7 +197,7 @@ const renderGroups = () => {
         <li>Private forum: ${group.forum}</li>
         <li>Group calendar: Connected</li>
       </ul>
-      <button class="secondary" data-scroll="#waitlist">Join group</button>
+      <a class="secondary button-link" href="${groupLink}">View group</a>
     `;
     groupFeed.prepend(card);
   });

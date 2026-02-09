@@ -28,6 +28,7 @@
         <a href="#buddies">Adventure Buddies</a>
         <a href="#integrations">Integrations</a>
         <button class="ghost" data-scroll="#waitlist">Join Waitlist</button>
+        <button class="primary" data-scroll="#login">Log in</button>
       </div>
     </nav>
 
@@ -74,6 +75,51 @@
   </header>
 
   <main>
+    <section id="login" class="section alternate">
+      <div class="section-header">
+        <h2>Log in to test the demo</h2>
+        <p>Create a local-only account to unlock posting, group admin tools, and calendars.</p>
+      </div>
+      <div class="auth-grid">
+        <form class="auth-card" data-auth="register">
+          <h3>Create account</h3>
+          <label>
+            <span>Name</span>
+            <input type="text" name="name" placeholder="Jamie Trailblazer" required />
+          </label>
+          <label>
+            <span>Email</span>
+            <input type="email" name="email" placeholder="you@outdoorcrew.com" required />
+          </label>
+          <label>
+            <span>Password</span>
+            <input type="password" name="password" placeholder="••••••••" required />
+          </label>
+          <button class="primary" type="submit">Create account</button>
+        </form>
+        <form class="auth-card" data-auth="login">
+          <h3>Log in</h3>
+          <label>
+            <span>Email</span>
+            <input type="email" name="email" placeholder="you@outdoorcrew.com" required />
+          </label>
+          <label>
+            <span>Password</span>
+            <input type="password" name="password" placeholder="••••••••" required />
+          </label>
+          <button class="secondary" type="submit">Log in</button>
+          <p class="auth-note">Accounts are stored locally in your browser for demo purposes.</p>
+        </form>
+      </div>
+      <div class="auth-status">
+        <div>
+          <strong>Signed in as:</strong>
+          <span data-auth-status>Guest</span>
+        </div>
+        <button class="ghost" data-auth-action="logout">Log out</button>
+      </div>
+    </section>
+
     <section id="communities" class="section">
       <div class="section-header">
         <h2>Local outdoor forums with personality</h2>
@@ -103,7 +149,39 @@
         <h2>Adventure posts that make it easy to say yes</h2>
         <p>Structured posts show the route, timing, gear notes, and vibe in one glance.</p>
       </div>
-      <div class="post-grid">
+      <form class="post-form" data-post-form>
+        <div class="form-grid">
+          <label>
+            <span>Title</span>
+            <input type="text" name="title" placeholder="Sunrise ridge run" required />
+          </label>
+          <label>
+            <span>Activity</span>
+            <select name="activity" required>
+              <option value="Hike">Hike</option>
+              <option value="Climb">Climb</option>
+              <option value="Bike">Bike</option>
+              <option value="Paddle">Paddle</option>
+              <option value="Run">Run</option>
+            </select>
+          </label>
+          <label>
+            <span>When</span>
+            <input type="text" name="when" placeholder="Sat 6:30 AM" required />
+          </label>
+          <label>
+            <span>Spots</span>
+            <input type="number" name="spots" placeholder="4" min="1" required />
+          </label>
+        </div>
+        <label>
+          <span>Details</span>
+          <textarea name="details" rows="3" placeholder="Route notes, pace, gear, vibe." required></textarea>
+        </label>
+        <button class="primary" type="submit">Post adventure</button>
+        <p class="form-note">Posting is unlocked after you log in.</p>
+      </form>
+      <div class="post-grid" data-post-feed>
         <article class="post-card">
           <div class="post-header">
             <div>
@@ -208,7 +286,37 @@
         <h2>Groups you can join right now</h2>
         <p>Find recurring meetups, training crews, and niche adventures with trusted leaders.</p>
       </div>
-      <div class="grid three">
+      <div class="group-admin">
+        <div>
+          <h3>Create or manage a group</h3>
+          <p>Add admins, private forums, and calendars for each group.</p>
+        </div>
+        <form class="group-form" data-group-form>
+          <label>
+            <span>Group name</span>
+            <input type="text" name="name" placeholder="Summit & Sip Club" required />
+          </label>
+          <label>
+            <span>Focus</span>
+            <input type="text" name="focus" placeholder="Weekend hikes + coffee" required />
+          </label>
+          <label>
+            <span>Admins</span>
+            <input type="text" name="admins" placeholder="Jamie, Alex, Priya" required />
+          </label>
+          <label>
+            <span>Private forum topic</span>
+            <input type="text" name="forum" placeholder="Route swaps + carpool" required />
+          </label>
+          <label>
+            <span>Next event</span>
+            <input type="text" name="event" placeholder="Sat 7:00 AM • Bear Peak" required />
+          </label>
+          <button class="secondary" type="submit">Create group</button>
+          <p class="form-note">Group management unlocks after login.</p>
+        </form>
+      </div>
+      <div class="grid three" data-group-feed>
         <article class="group-card">
           <div class="group-header">
             <div>
@@ -220,7 +328,9 @@
           <ul class="group-details">
             <li>Next meetup: Tue 6:30 PM</li>
             <li>Members: 48</li>
-            <li>Organizer: Mei L.</li>
+            <li>Admins: Mei L., Gabi R.</li>
+            <li>Private forum: Beta exchange</li>
+            <li>Group calendar: Shared climbs</li>
           </ul>
           <button class="secondary" data-scroll="#waitlist">Join group</button>
         </article>
@@ -235,7 +345,9 @@
           <ul class="group-details">
             <li>Next meetup: Wed 6:00 AM</li>
             <li>Members: 32</li>
-            <li>Organizer: Jonah P.</li>
+            <li>Admins: Jonah P., Lila G.</li>
+            <li>Private forum: Sunrise routes</li>
+            <li>Group calendar: Weekday hikes</li>
           </ul>
           <button class="secondary" data-scroll="#waitlist">Request invite</button>
         </article>
@@ -250,7 +362,9 @@
           <ul class="group-details">
             <li>Next meetup: Thu 7:15 PM</li>
             <li>Members: 21</li>
-            <li>Organizer: Rhea K.</li>
+            <li>Admins: Rhea K., Devon S.</li>
+            <li>Private forum: Lake logistics</li>
+            <li>Group calendar: Sunset sessions</li>
           </ul>
           <button class="secondary" data-scroll="#waitlist">Join group</button>
         </article>
@@ -264,6 +378,11 @@
           Sync group events to your personal profile calendar and keep everyone on the same
           schedule.
         </p>
+      </div>
+      <div class="calendar-tabs">
+        <button class="ghost" data-calendar-tab="group">Group calendars</button>
+        <button class="ghost" data-calendar-tab="friends">Friends calendar</button>
+        <button class="ghost" data-calendar-tab="private">Private profile</button>
       </div>
       <div class="calendar-layout">
         <div class="calendar-card">

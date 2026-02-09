@@ -202,6 +202,88 @@ h1 {
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
 }
 
+.auth-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.auth-card {
+  background: var(--card);
+  padding: 1.5rem;
+  border-radius: 20px;
+  box-shadow: 0 14px 28px rgba(27, 32, 30, 0.08);
+  display: grid;
+  gap: 1rem;
+}
+
+.auth-card label,
+.post-form label,
+.group-form label {
+  display: grid;
+  gap: 0.35rem;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.auth-card input,
+.post-form input,
+.post-form select,
+.post-form textarea,
+.group-form input {
+  padding: 0.7rem 1rem;
+  border-radius: 12px;
+  border: 1px solid #d6ddd8;
+  font-size: 0.95rem;
+}
+
+.auth-note {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.auth-status {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  background: #f6f8f6;
+  padding: 1rem 1.5rem;
+  border-radius: 16px;
+  color: var(--muted);
+}
+
+.post-form,
+.group-form {
+  background: var(--card);
+  padding: 1.5rem;
+  border-radius: 20px;
+  box-shadow: 0 14px 28px rgba(27, 32, 30, 0.08);
+  display: grid;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.form-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.form-note {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.group-admin {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  align-items: start;
+  margin-bottom: 2rem;
+}
+
 .post-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -322,6 +404,18 @@ article,
   display: grid;
   gap: 0.5rem;
   color: var(--muted);
+}
+
+.calendar-tabs {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.calendar-tabs button.active {
+  border-color: var(--primary);
+  color: var(--primary);
 }
 
 .calendar-layout {
@@ -581,6 +675,10 @@ article p,
 
 @media (max-width: 900px) {
   .calendar-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .group-admin {
     grid-template-columns: 1fr;
   }
 }

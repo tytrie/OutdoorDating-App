@@ -2,10 +2,23 @@ const buttons = document.querySelectorAll("button");
 const waitlistForm = document.querySelector(".waitlist-form");
 
 buttons.forEach((button) => {
-  button.addEventListener("click", () => {
-    const label = button.textContent.trim();
-    window.alert(`Thanks for your interest! "${label}" will be live in the next beta.`);
-  });
+  const scrollTarget = button.dataset.scroll;
+  if (scrollTarget) {
+    button.addEventListener("click", () => {
+      const target = document.querySelector(scrollTarget);
+      if (target) {
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    });
+    return;
+  }
+
+  const alertMessage = button.dataset.alert;
+  if (alertMessage) {
+    button.addEventListener("click", () => {
+      window.alert(alertMessage);
+    });
+  }
 });
 
 if (waitlistForm) {

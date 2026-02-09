@@ -239,6 +239,94 @@ article p,
   color: var(--primary);
 }
 
+.roadmap {
+  margin-top: 2.5rem;
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  background: #f6f9f7;
+  border-radius: 22px;
+  padding: 2rem;
+}
+
+.roadmap h3 {
+  margin-bottom: 0.5rem;
+}
+
+.roadmap p {
+  color: var(--muted);
+  max-width: 460px;
+  line-height: 1.6;
+}
+
+.roadmap ul {
+  list-style: none;
+  display: grid;
+  gap: 0.75rem;
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.roadmap li {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+}
+
+.roadmap li::before {
+  content: "✓";
+  color: var(--accent);
+}
+
+.event-card {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.event-meta {
+  display: flex;
+  justify-content: space-between;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.waitlist {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 2rem;
+  align-items: center;
+}
+
+.waitlist p {
+  color: var(--muted);
+  margin-top: 0.75rem;
+}
+
+.waitlist-form {
+  display: grid;
+  gap: 1rem;
+  background: var(--card);
+  padding: 1.5rem;
+  border-radius: 20px;
+  box-shadow: 0 14px 28px rgba(27, 32, 30, 0.08);
+}
+
+.waitlist-form label {
+  display: grid;
+  gap: 0.35rem;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.waitlist-form input {
+  padding: 0.7rem 1rem;
+  border-radius: 12px;
+  border: 1px solid #d6ddd8;
+  font-size: 0.95rem;
+}
+
 .callout {
   background: var(--primary);
   color: white;

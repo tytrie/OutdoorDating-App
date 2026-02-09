@@ -20,9 +20,18 @@
         <small>Adventure circles</small>
       </div>
       <div class="nav-links">
-        <a href="index.html#posts">Back to posts</a>
-        <a href="index.html#groups">Groups</a>
+        <a href="posts.html">Back to posts</a>
+        <a href="communities.html#groups">Groups</a>
         <button class="ghost" data-scroll="#post-interaction">Jump to interactions</button>
+        <div class="profile-menu" data-profile-menu>
+          <button class="primary" data-profile-toggle>Log in</button>
+          <div class="profile-dropdown" data-profile-dropdown>
+            <a href="profile.html">Profile</a>
+            <a href="profile.html#calendar">Calendar</a>
+            <a href="profile.html#events">Events</a>
+            <button class="ghost" type="button" data-auth-action="logout">Log out</button>
+          </div>
+        </div>
       </div>
     </nav>
 
@@ -75,6 +84,42 @@
       </div>
     </section>
 
+    <section id="post-edit" class="section alternate">
+      <div class="section-header">
+        <h2>Edit this post</h2>
+        <p>Update details after the fact and keep everyone in sync.</p>
+      </div>
+      <form class="post-form" data-edit-form>
+        <div class="form-grid">
+          <label>
+            <span>Title</span>
+            <input type="text" name="title" required />
+          </label>
+          <label>
+            <span>Activity</span>
+            <input type="text" name="activity" required />
+          </label>
+          <label>
+            <span>When</span>
+            <input type="text" name="when" required />
+          </label>
+          <label>
+            <span>Location</span>
+            <input type="text" name="location" required />
+          </label>
+          <label>
+            <span>Spots</span>
+            <input type="number" name="spots" min="1" required />
+          </label>
+        </div>
+        <label>
+          <span>Details</span>
+          <textarea name="details" rows="3" required></textarea>
+        </label>
+        <button class="primary" type="submit">Save changes</button>
+      </form>
+    </section>
+
     <section id="post-comments" class="section alternate">
       <div class="section-header">
         <h2>Questions & comments</h2>
@@ -91,6 +136,7 @@
     </section>
   </main>
 
+  <script src="app.js"></script>
   <script src="posts.js"></script>
 </body>
 </html>

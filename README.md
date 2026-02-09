@@ -17,5 +17,10 @@ Then visit `http://localhost:8000`.
 ## Demo Pages
 
 - Landing page: `http://localhost:8000/index.html`
+- Communities: `http://localhost:8000/communities.html`
+- Posts feed: `http://localhost:8000/posts.html`
+- Profiles: `http://localhost:8000/profiles.html`
 - Group dashboard: `http://localhost:8000/groups.html`
 - Post detail: `http://localhost:8000/post.html`
+- Profile editor: `http://localhost:8000/profile.html`
+- Integrations (WIP): `http://localhost:8000/integrations.html`

@@ -1,6 +1,8 @@
 const storageKeys = {
   groups: "od_groups",
   groupExtras: "od_group_extras",
+  session: "od_session",
+  profileEvents: "od_profile_events",
 };
 
 const handleScroll = (event) => {
@@ -47,19 +49,52 @@ const eventForm = document.querySelector("[data-event-form]");
 const eventFeed = document.querySelector("[data-event-feed]");
 const forumForm = document.querySelector("[data-forum-form]");
 const forumFeed = document.querySelector("[data-forum-feed]");
+const adminOnlySections = document.querySelectorAll("[data-admin-only]");
+const eventCommentForm = document.querySelector("[data-event-comment-form]");
+const eventCommentFeed = document.querySelector("[data-event-comment-feed]");
 
 const extras = getStored(storageKeys.groupExtras, {});
+const seededGroups = {
+  "Front Range Climbers": {
+    admins: ["Mei L.", "Gabi R."],
+    forum: "Beta exchange",
+    calendar: "Shared climbs",
+    members: 48,
+  },
+  "Sunrise Trail Society": {
+    admins: ["Jonah P.", "Lila G."],
+    forum: "Sunrise routes",
+    calendar: "Weekday hikes",
+    members: 32,
+  },
+  "After-Work Paddle Club": {
+    admins: ["Rhea K.", "Devon S."],
+    forum: "Lake logistics",
+    calendar: "Sunset sessions",
+    members: 21,
+  },
+};
+
+const seeded = seededGroups[groupName];
 const groupExtra = extras[groupName] || {
-  admins: ["You"],
-  forum: "General",
-  calendar: "Connected",
-  members: 12,
+  admins: seeded?.admins || ["Group lead"],
+  forum: seeded?.forum || "General",
+  calendar: seeded?.calendar || "Connected",
+  members: seeded?.members || 12,
   events: [],
+  eventRsvps: {},
+  eventComments: [],
   topics: [],
 };
 
 const groups = getStored(storageKeys.groups, []);
 const storedGroup = groups.find((group) => group.name === groupName);
+const session = getStored(storageKeys.session, null);
+const isAdmin = Boolean(session && storedGroup?.createdBy === session.email);
+
+if (storedGroup?.admins) {
+  groupExtra.admins = storedGroup.admins.split(",").map((name) => name.trim());
+}
 
 if (title) title.textContent = groupName;
 if (description) {
@@ -75,6 +110,10 @@ if (nextEvent) {
     groupExtra.events[0]?.time || storedGroup?.event || "Next: Not scheduled";
 }
 if (admins) admins.textContent = `Admins: ${groupExtra.admins.join(", ")}`;
+
+adminOnlySections.forEach((section) => {
+  section.classList.toggle("is-hidden", !isAdmin);
+});
 
 const persistExtras = () => {
   extras[groupName] = groupExtra;
@@ -96,6 +135,7 @@ const renderEvents = () => {
   if (!eventFeed) return;
   eventFeed.innerHTML = "";
   groupExtra.events.forEach((event) => {
+    const rsvps = groupExtra.eventRsvps[event.title] || [];
     const card = document.createElement("article");
     card.className = "post-card";
     card.innerHTML = `
@@ -109,8 +149,12 @@ const renderEvents = () => {
       <p class="post-body">${event.notes}</p>
       <div class="post-footer">
         <div>
-          <strong>Visibility: ${event.visibility}</strong>
+          <strong>${rsvps.length} RSVPs</strong>
           <span>Added by ${event.addedBy}</span>
+        </div>
+        <div class="cta-row">
+          <button class="secondary" data-event-action="rsvp" data-event-title="${event.title}">Join</button>
+          <button class="ghost" data-event-action="save" data-event-title="${event.title}">Add to my calendar</button>
         </div>
       </div>
     `;
@@ -133,6 +177,26 @@ const renderTopics = () => {
   });
 };
 
+const renderEventComments = () => {
+  if (!eventCommentFeed) return;
+  eventCommentFeed.innerHTML = "";
+  groupExtra.eventComments.forEach((comment) => {
+    const card = document.createElement("article");
+    card.className = "post-card";
+    card.innerHTML = `
+      <div class="post-header">
+        <div>
+          <h4>${comment.author}</h4>
+          <p>${comment.time}</p>
+        </div>
+        <span class="post-tag">Event comment</span>
+      </div>
+      <p class="post-body">${comment.text}</p>
+    `;
+    eventCommentFeed.append(card);
+  });
+};
+
 if (adminForm) {
   adminForm.addEventListener("submit", (event) => {
     event.preventDefault();
@@ -150,6 +214,7 @@ if (adminForm) {
 if (eventForm) {
   eventForm.addEventListener("submit", (event) => {
     event.preventDefault();
+    if (!isAdmin) return;
     const formData = new FormData(eventForm);
     const newEvent = {
       title: String(formData.get("title")).trim(),
@@ -172,6 +237,7 @@ if (eventForm) {
 if (forumForm) {
   forumForm.addEventListener("submit", (event) => {
     event.preventDefault();
+    if (!isAdmin) return;
     const formData = new FormData(forumForm);
     const topic = {
       topic: String(formData.get("topic")).trim(),
@@ -185,6 +251,46 @@ if (forumForm) {
   });
 }
 
+if (eventCommentForm) {
+  eventCommentForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const formData = new FormData(eventCommentForm);
+    const text = String(formData.get("comment")).trim();
+    if (!text) return;
+    groupExtra.eventComments.unshift({ author: session?.name || "Guest", time: "Just now", text });
+    persistExtras();
+    eventCommentForm.reset();
+    renderEventComments();
+  });
+}
+
+document.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-event-action]");
+  if (!button) return;
+  const titleValue = button.dataset.eventTitle;
+  if (!titleValue) return;
+  if (button.dataset.eventAction === "rsvp") {
+    const list = groupExtra.eventRsvps[titleValue] || [];
+    if (!list.includes(session?.name || "You")) {
+      list.unshift(session?.name || "You");
+      groupExtra.eventRsvps[titleValue] = list;
+      persistExtras();
+      renderEvents();
+    }
+  }
+  if (button.dataset.eventAction === "save") {
+    const events = getStored(storageKeys.profileEvents, []);
+    const match = groupExtra.events.find((eventItem) => eventItem.title === titleValue);
+    if (match) {
+      events.unshift(match);
+      setStored(storageKeys.profileEvents, events);
+      button.textContent = "Added";
+      button.disabled = true;
+    }
+  }
+});
+
 renderAdmins();
 renderEvents();
 renderTopics();
+renderEventComments();

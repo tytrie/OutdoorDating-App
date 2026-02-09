@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OutdoorDating | Communities</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="hero">
+    <nav class="nav">
+      <div class="logo">
+        <span>OutdoorDating</span>
+        <small>Adventure circles</small>
+      </div>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="posts.html">Posts</a>
+        <a href="profiles.html">Profiles</a>
+        <a href="#groups">Groups</a>
+        <a href="integrations.html">Integrations</a>
+        <div class="profile-menu" data-profile-menu>
+          <button class="primary" data-profile-toggle>Log in</button>
+          <div class="profile-dropdown" data-profile-dropdown>
+            <a href="profile.html">Profile</a>
+            <a href="profile.html#calendar">Calendar</a>
+            <a href="profile.html#events">Events</a>
+            <button class="ghost" type="button" data-auth-action="logout">Log out</button>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="hero-content">
+      <div>
+        <p class="eyebrow">Find your local crew</p>
+        <h1>Communities near you.</h1>
+        <p class="subhead">Search by city to unlock local forums, groups, and meetups.</p>
+        <div class="cta-row">
+          <input class="search-input" type="text" placeholder="Search city or region" data-community-search />
+          <button class="primary" data-scroll="#community-list">Browse communities</button>
+        </div>
+      </div>
+      <div class="hero-card">
+        <h3>Live right now</h3>
+        <p>Top cities trending this week</p>
+        <div class="pill-row">
+          <span>Denver</span>
+          <span>Portland</span>
+          <span>Austin</span>
+        </div>
+        <div class="attendees">
+          <div>
+            <strong>120+ groups</strong>
+            <span>Across 60 regions</span>
+          </div>
+          <button class="accent" data-scroll="#community-list">Find my city</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="community-list" class="section">
+      <div class="section-header">
+        <h2>Choose your community</h2>
+        <p>Join a hub to unlock local forums, events, and group calendars.</p>
+      </div>
+      <div class="grid three" data-community-feed></div>
+    </section>
+
+    <section id="groups" class="section alternate">
+      <div class="section-header">
+        <h2>Popular groups in your area</h2>
+        <p>Explore community-led groups and jump into the conversation.</p>
+      </div>
+      <div class="grid three" data-community-groups></div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+  <script src="communities.js"></script>
+</body>
+</html>

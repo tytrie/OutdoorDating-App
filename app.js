@@ -7,6 +7,9 @@ const postFeed = document.querySelector("[data-post-feed]");
 const groupForm = document.querySelector("[data-group-form]");
 const groupFeed = document.querySelector("[data-group-feed]");
 const calendarTabs = document.querySelectorAll("[data-calendar-tab]");
+const profileMenu = document.querySelector("[data-profile-menu]");
+const profileToggle = document.querySelector("[data-profile-toggle]");
+const profileDropdown = document.querySelector("[data-profile-dropdown]");
 
 const storageKeys = {
   users: "od_users",
@@ -38,6 +41,19 @@ const renderAuthStatus = () => {
   authStatus.textContent = session ? `${session.name} (${session.email})` : "Guest";
 };
 
+const renderProfileMenu = () => {
+  if (!profileMenu || !profileToggle) return;
+  const session = getSession();
+  if (session) {
+    profileToggle.textContent = "Profile";
+    profileMenu.classList.remove("is-logged-out");
+  } else {
+    profileToggle.textContent = "Log in";
+    profileMenu.classList.add("is-logged-out");
+    profileMenu.classList.remove("open");
+  }
+};
+
 const handleScroll = (event) => {
   const targetButton = event.target.closest("button");
   if (!targetButton) return;
@@ -49,6 +65,30 @@ const handleScroll = (event) => {
 };
 
 document.addEventListener("click", handleScroll);
+
+if (profileToggle && profileMenu) {
+  profileToggle.addEventListener("click", (event) => {
+    const session = getSession();
+    if (!session) {
+      const loginSection = document.querySelector("#login");
+      if (loginSection) {
+        loginSection.scrollIntoView({ behavior: "smooth", block: "start" });
+      } else {
+        window.location.href = "index.html#login";
+      }
+      return;
+    }
+    event.stopPropagation();
+    profileMenu.classList.toggle("open");
+  });
+}
+
+document.addEventListener("click", (event) => {
+  if (!profileMenu || !profileDropdown) return;
+  if (!profileMenu.contains(event.target)) {
+    profileMenu.classList.remove("open");
+  }
+});
 
 buttons.forEach((button) => {
   const alertMessage = button.dataset.alert;
@@ -97,6 +137,7 @@ document.querySelectorAll("[data-auth]").forEach((form) => {
       setSession({ name, email });
       form.reset();
       renderAuthStatus();
+      renderProfileMenu();
       window.alert("Account created! You are now logged in.");
       return;
     }
@@ -109,6 +150,7 @@ document.querySelectorAll("[data-auth]").forEach((form) => {
     setSession({ name: match.name, email: match.email });
     form.reset();
     renderAuthStatus();
+    renderProfileMenu();
     window.alert("Welcome back!");
   });
 });
@@ -117,6 +159,7 @@ if (logoutButton) {
   logoutButton.addEventListener("click", () => {
     setSession(null);
     renderAuthStatus();
+    renderProfileMenu();
     window.alert("You have been logged out.");
   });
 }
@@ -215,6 +258,7 @@ if (groupForm) {
       admins: String(formData.get("admins")).trim(),
       forum: String(formData.get("forum")).trim(),
       event: String(formData.get("event")).trim(),
+      createdBy: session.email,
     };
     const groups = getStored(storageKeys.groups, []);
     groups.unshift(group);
@@ -232,5 +276,6 @@ calendarTabs.forEach((tab) => {
 });
 
 renderAuthStatus();
+renderProfileMenu();
 renderPosts();
 renderGroups();

@@ -30,7 +30,7 @@ const setStored = (key, value) => {
 };
 
 const params = new URLSearchParams(window.location.search);
-const postTitle = params.get("title") || "Adventure post";
+let postTitle = params.get("title") || "Adventure post";
 
 const title = document.querySelector("[data-post-title]");
 const meta = document.querySelector("[data-post-meta]");
@@ -45,6 +45,7 @@ const likes = document.querySelector("[data-post-likes]");
 
 const commentForm = document.querySelector("[data-comment-form]");
 const commentFeed = document.querySelector("[data-comment-feed]");
+const editForm = document.querySelector("[data-edit-form]");
 
 const extras = getStored(storageKeys.postExtras, {});
 const postExtra = extras[postTitle] || {
@@ -53,17 +54,40 @@ const postExtra = extras[postTitle] || {
   comments: [],
 };
 
+const samplePosts = [
+  {
+    title: "Alpine dawn patrol",
+    when: "Sat 5:40 AM",
+    location: "St. Mary trailhead",
+    activity: "Hike",
+    spots: 2,
+    details: "Sunrise mission + coffee afterward.",
+    author: "Lina S.",
+  },
+  {
+    title: "Bike to the hot springs",
+    when: "Saturday",
+    location: "Park gate",
+    activity: "Bike",
+    spots: 4,
+    details: "Social ride with snacks and a playlist.",
+    author: "Isaiah M.",
+  },
+];
+
 const posts = getStored(storageKeys.posts, []);
 const storedPost = posts.find((post) => post.title === postTitle);
+const fallbackPost = samplePosts.find((post) => post.title === postTitle);
+const activePost = storedPost || fallbackPost;
 
 if (title) title.textContent = postTitle;
-if (meta) meta.textContent = storedPost?.details || "Details appear here.";
-if (summary) summary.textContent = storedPost?.details || "Local adventure with flexible timing.";
-if (spots) spots.textContent = `Spots open: ${storedPost?.spots || 0}`;
-if (activity) activity.textContent = storedPost?.activity || "Activity";
-if (author) author.textContent = `Host: ${storedPost?.author || "OutdoorDating"}`;
-if (time) time.textContent = storedPost?.when || "Time";
-if (location) location.textContent = storedPost?.location || "Location";
+if (meta) meta.textContent = activePost?.details || "Details appear here.";
+if (summary) summary.textContent = activePost?.details || "Local adventure with flexible timing.";
+if (spots) spots.textContent = `Spots open: ${activePost?.spots || 0}`;
+if (activity) activity.textContent = activePost?.activity || "Activity";
+if (author) author.textContent = `Host: ${activePost?.author || "OutdoorDating"}`;
+if (time) time.textContent = activePost?.when || "Time";
+if (location) location.textContent = activePost?.location || "Location";
 
 const persistExtras = () => {
   extras[postTitle] = postExtra;
@@ -108,10 +132,15 @@ document.querySelectorAll("[data-post-action]").forEach((button) => {
       postExtra.likes += 1;
     }
     if (action === "join") {
-      postExtra.rsvps.unshift("You");
+      if (!postExtra.rsvps.includes("You")) {
+        postExtra.rsvps.unshift("You");
+      }
     }
     if (action === "save") {
-      postExtra.rsvps.unshift("Saved for later");
+      if (!postExtra.rsvps.includes("Saved for later")) {
+        postExtra.rsvps.unshift("Saved for later");
+      }
+      button.textContent = "Saved";
     }
     persistExtras();
     renderInteractions();
@@ -137,3 +166,51 @@ if (commentForm) {
 
 renderInteractions();
 renderComments();
+
+if (editForm && activePost) {
+  editForm.title.value = activePost.title;
+  editForm.activity.value = activePost.activity;
+  editForm.when.value = activePost.when;
+  editForm.location.value = activePost.location;
+  editForm.spots.value = activePost.spots;
+  editForm.details.value = activePost.details;
+}
+
+if (editForm) {
+  editForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const formData = new FormData(editForm);
+    const updated = {
+      title: String(formData.get("title")).trim(),
+      activity: String(formData.get("activity")).trim(),
+      when: String(formData.get("when")).trim(),
+      location: String(formData.get("location")).trim(),
+      spots: String(formData.get("spots")).trim(),
+      details: String(formData.get("details")).trim(),
+      author: activePost?.author || "You",
+    };
+    const stored = getStored(storageKeys.posts, []);
+    const index = stored.findIndex((post) => post.title === postTitle);
+    if (index !== -1) {
+      stored[index] = updated;
+    } else {
+      stored.unshift(updated);
+    }
+    setStored(storageKeys.posts, stored);
+    if (updated.title !== postTitle) {
+      extras[updated.title] = postExtra;
+      delete extras[postTitle];
+      postTitle = updated.title;
+      window.history.replaceState({}, \"\", `post.html?title=${encodeURIComponent(updated.title)}`);
+    }
+    persistExtras();
+    if (title) title.textContent = updated.title;
+    if (meta) meta.textContent = updated.details;
+    if (summary) summary.textContent = updated.details;
+    if (spots) spots.textContent = `Spots open: ${updated.spots}`;
+    if (activity) activity.textContent = updated.activity;
+    if (author) author.textContent = `Host: ${updated.author}`;
+    if (time) time.textContent = updated.when;
+    if (location) location.textContent = updated.location;
+  });
+}

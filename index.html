@@ -20,15 +20,22 @@
         <small>Adventure circles</small>
       </div>
       <div class="nav-links">
-        <a href="#communities">Communities</a>
-        <a href="#posts">Posts</a>
-        <a href="#profiles">Profiles</a>
-        <a href="#groups">Groups</a>
-        <a href="#calendar">Calendar</a>
-        <a href="#buddies">Adventure Buddies</a>
-        <a href="#integrations">Integrations</a>
+        <a href="communities.html">Communities</a>
+        <a href="posts.html">Posts</a>
+        <a href="profiles.html">Profiles</a>
+        <a href="communities.html#groups">Groups</a>
+        <a href="profiles.html">Adventure Buddies</a>
+        <a href="integrations.html">Integrations</a>
         <button class="ghost" data-scroll="#waitlist">Join Waitlist</button>
-        <button class="primary" data-scroll="#login">Log in</button>
+        <div class="profile-menu" data-profile-menu>
+          <button class="primary" data-profile-toggle>Log in</button>
+          <div class="profile-dropdown" data-profile-dropdown>
+            <a href="profile.html">Profile</a>
+            <a href="profile.html#calendar">Calendar</a>
+            <a href="profile.html#events">Events</a>
+            <button class="ghost" type="button" data-auth-action="logout">Log out</button>
+          </div>
+        </div>
       </div>
     </nav>
 
@@ -375,82 +382,6 @@
       </div>
     </section>
 
-    <section id="calendar" class="section">
-      <div class="section-header">
-        <h2>Plan on a shared adventure calendar</h2>
-        <p>
-          Sync group events to your personal profile calendar and keep everyone on the same
-          schedule.
-        </p>
-      </div>
-      <div class="calendar-tabs">
-        <button class="ghost" data-calendar-tab="group">Group calendars</button>
-        <button class="ghost" data-calendar-tab="friends">Friends calendar</button>
-        <button class="ghost" data-calendar-tab="private">Private profile</button>
-      </div>
-      <div class="calendar-layout">
-        <div class="calendar-card">
-          <div class="calendar-header">
-            <div>
-              <h3>August 2024</h3>
-              <p>Group calendar highlights</p>
-            </div>
-            <button class="ghost" data-scroll="#waitlist">Sync my calendar</button>
-          </div>
-          <div class="calendar-grid">
-            <div class="calendar-day">Mon</div>
-            <div class="calendar-day">Tue</div>
-            <div class="calendar-day">Wed</div>
-            <div class="calendar-day">Thu</div>
-            <div class="calendar-day">Fri</div>
-            <div class="calendar-day">Sat</div>
-            <div class="calendar-day">Sun</div>
-            <div class="calendar-cell">5</div>
-            <div class="calendar-cell">
-              6
-              <span>Climb night</span>
-            </div>
-            <div class="calendar-cell">7</div>
-            <div class="calendar-cell">
-              8
-              <span>Lake paddle</span>
-            </div>
-            <div class="calendar-cell">9</div>
-            <div class="calendar-cell">
-              10
-              <span>Trail loop</span>
-            </div>
-            <div class="calendar-cell">11</div>
-            <div class="calendar-cell">12</div>
-            <div class="calendar-cell">
-              13
-              <span>Gear swap</span>
-            </div>
-            <div class="calendar-cell">14</div>
-            <div class="calendar-cell">15</div>
-          </div>
-        </div>
-        <div class="calendar-sidebar">
-          <h4>Upcoming events</h4>
-          <div class="calendar-event">
-            <strong>Tue 6:30 PM</strong>
-            <span>Front Range Climbers • Gym session</span>
-          </div>
-          <div class="calendar-event">
-            <strong>Thu 7:15 PM</strong>
-            <span>Paddle Club • Sunset loop</span>
-          </div>
-          <div class="calendar-event">
-            <strong>Sat 8:00 AM</strong>
-            <span>Sunrise Trail Society • Falls hike</span>
-          </div>
-          <div class="calendar-note">
-            <p>Private profile calendar keeps your RSVP history and safety check-ins.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <section id="buddies" class="section alternate">
       <div class="section-header">
         <h2>Adventure buddy matching that feels human</h2>
@@ -479,41 +410,19 @@
       </div>
     </section>
 
-    <section id="integrations" class="section">
+    <section class="section">
       <div class="section-header">
-        <h2>Designed for future integrations</h2>
+        <h2>Integrations are coming soon</h2>
         <p>
-          Soon connect with apps like MtnProject, AllTrails, and Strava to bring your routes and
-          activity history into every match.
+          Track the roadmap, vote on priorities, and plug in your favorite outdoor apps.
         </p>
       </div>
-      <div class="integration-row">
-        <div class="integration-card">
-          <span>MtnProject</span>
-          <p>Automatically share favorite climbs and send partner invites.</p>
-        </div>
-        <div class="integration-card">
-          <span>AllTrails</span>
-          <p>Highlight the hikes you love and plan new ones together.</p>
-        </div>
-        <div class="integration-card">
-          <span>Strava</span>
-          <p>Match with people who move at your pace and training cadence.</p>
-        </div>
-      </div>
-      <div class="roadmap">
+      <div class="callout">
         <div>
-          <h3>Integration roadmap</h3>
-          <p>
-            Hook into the tools your community already uses and keep everything synced from one
-            place.
-          </p>
+          <h2>View the integration roadmap</h2>
+          <p>We are building connectors for MtnProject, AllTrails, and Strava next.</p>
         </div>
-        <ul>
-          <li>Route sync + GPX import for shared planning.</li>
-          <li>Activity summaries on profiles for better compatibility.</li>
-          <li>Auto-suggest trips based on the last 90 days of activity.</li>
-        </ul>
+        <a class="primary button-link" href="integrations.html">See integrations</a>
       </div>
     </section>
 

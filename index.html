@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OutdoorDating | Adventure Buddy Finder</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="hero">
+    <nav class="nav">
+      <div class="logo">
+        <span>OutdoorDating</span>
+        <small>Adventure circles</small>
+      </div>
+      <div class="nav-links">
+        <a href="#communities">Communities</a>
+        <a href="#posts">Posts</a>
+        <a href="#profiles">Profiles</a>
+        <a href="#groups">Groups</a>
+        <a href="#calendar">Calendar</a>
+        <a href="#buddies">Adventure Buddies</a>
+        <a href="#integrations">Integrations</a>
+        <button class="ghost" data-scroll="#waitlist">Join Waitlist</button>
+        <button class="primary" data-scroll="#login">Log in</button>
+      </div>
+    </nav>
+
+    <div class="hero-content">
+      <div>
+        <p class="eyebrow">New app concept</p>
+        <h1>Meet people who live for the trail, the tide, and the climb.</h1>
+        <p class="subhead">
+          OutdoorDating is the friend-making and dating hub for local adventure seekers. Post
+          upcoming outings, find compatible partners, and grow real-world community.
+        </p>
+        <div class="cta-row">
+          <button class="primary" data-scroll="#communities">Start Exploring</button>
+          <button class="secondary" data-scroll="#events">Create Adventure Post</button>
+        </div>
+        <div class="hero-meta">
+          <div>
+            <strong>120+ locales</strong>
+            <span>Beta-ready community hubs</span>
+          </div>
+          <div>
+            <strong>Match by vibe</strong>
+            <span>Find hiking, biking, climbing pals</span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-card">
+        <h3>Tonight in Denver</h3>
+        <p>Sunset scrambles + brewery wind-down</p>
+        <div class="pill-row">
+          <span>Trail run</span>
+          <span>Friends</span>
+          <span>Beginner friendly</span>
+        </div>
+        <div class="attendees">
+          <div>
+            <strong>8 spots</strong>
+            <span>4 already joined</span>
+          </div>
+          <button class="accent" data-scroll="#events">Join adventure</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="login" class="section alternate">
+      <div class="section-header">
+        <h2>Log in to test the demo</h2>
+        <p>Create a local-only account to unlock posting, group admin tools, and calendars.</p>
+      </div>
+      <div class="auth-grid">
+        <form class="auth-card" data-auth="register">
+          <h3>Create account</h3>
+          <label>
+            <span>Name</span>
+            <input type="text" name="name" placeholder="Jamie Trailblazer" required />
+          </label>
+          <label>
+            <span>Email</span>
+            <input type="email" name="email" placeholder="you@outdoorcrew.com" required />
+          </label>
+          <label>
+            <span>Password</span>
+            <input type="password" name="password" placeholder="••••••••" required />
+          </label>
+          <button class="primary" type="submit">Create account</button>
+        </form>
+        <form class="auth-card" data-auth="login">
+          <h3>Log in</h3>
+          <label>
+            <span>Email</span>
+            <input type="email" name="email" placeholder="you@outdoorcrew.com" required />
+          </label>
+          <label>
+            <span>Password</span>
+            <input type="password" name="password" placeholder="••••••••" required />
+          </label>
+          <button class="secondary" type="submit">Log in</button>
+          <p class="auth-note">Accounts are stored locally in your browser for demo purposes.</p>
+        </form>
+      </div>
+      <div class="auth-status">
+        <div>
+          <strong>Signed in as:</strong>
+          <span data-auth-status>Guest</span>
+        </div>
+        <button class="ghost" data-auth-action="logout">Log out</button>
+      </div>
+    </section>
+
+    <section id="communities" class="section">
+      <div class="section-header">
+        <h2>Local outdoor forums with personality</h2>
+        <p>
+          Each city has a conversation board for ride shares, gear swaps, trail alerts, and
+          spontaneous meetups.
+        </p>
+      </div>
+      <div class="grid three">
+        <article>
+          <h4>Trail Talk</h4>
+          <p>Ask for conditions, post stoke photos, and meet people who hike your pace.</p>
+        </article>
+        <article>
+          <h4>Adventure Boards</h4>
+          <p>Plan weekend trips, carpools, and overnight hut missions with a clear roster.</p>
+        </article>
+        <article>
+          <h4>Gear Exchange</h4>
+          <p>Trade or borrow equipment and keep the gear closet moving.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="posts" class="section alternate">
+      <div class="section-header">
+        <h2>Adventure posts that make it easy to say yes</h2>
+        <p>Structured posts show the route, timing, gear notes, and vibe in one glance.</p>
+      </div>
+      <form class="post-form" data-post-form>
+        <div class="form-grid">
+          <label>
+            <span>Title</span>
+            <input type="text" name="title" placeholder="Sunrise ridge run" required />
+          </label>
+          <label>
+            <span>Activity</span>
+            <select name="activity" required>
+              <option value="Hike">Hike</option>
+              <option value="Climb">Climb</option>
+              <option value="Bike">Bike</option>
+              <option value="Paddle">Paddle</option>
+              <option value="Run">Run</option>
+            </select>
+          </label>
+          <label>
+            <span>When</span>
+            <input type="text" name="when" placeholder="Sat 6:30 AM" required />
+          </label>
+          <label>
+            <span>Spots</span>
+            <input type="number" name="spots" placeholder="4" min="1" required />
+          </label>
+        </div>
+        <label>
+          <span>Details</span>
+          <textarea name="details" rows="3" placeholder="Route notes, pace, gear, vibe." required></textarea>
+        </label>
+        <button class="primary" type="submit">Post adventure</button>
+        <p class="form-note">Posting is unlocked after you log in.</p>
+      </form>
+      <div class="post-grid" data-post-feed>
+        <article class="post-card">
+          <div class="post-header">
+            <div>
+              <h4>Alpine dawn patrol</h4>
+              <p>St. Mary trailhead • 5:40 AM • Intermediate</p>
+            </div>
+            <span class="post-tag">Hike</span>
+          </div>
+          <p class="post-body">
+            Looking for 2-3 partners to catch sunrise and grab coffee after. Moderate pace, bring
+            layers.
+          </p>
+          <div class="post-footer">
+            <div>
+              <strong>2 spots open</strong>
+              <span>Posted by Lina S.</span>
+            </div>
+            <button class="secondary" data-scroll="#waitlist">Request invite</button>
+          </div>
+        </article>
+        <article class="post-card">
+          <div class="post-header">
+            <div>
+              <h4>Bike to the hot springs</h4>
+              <p>Saturday • 24 miles • Social ride</p>
+            </div>
+            <span class="post-tag">Bike</span>
+          </div>
+          <p class="post-body">
+            Bringing snacks and a playlist. Meet at the park gate, roll out at 9 AM sharp.
+          </p>
+          <div class="post-footer">
+            <div>
+              <strong>4 spots open</strong>
+              <span>Posted by Isaiah M.</span>
+            </div>
+            <button class="secondary" data-scroll="#waitlist">Join crew</button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="profiles" class="section">
+      <div class="section-header">
+        <h2>Profiles built for compatibility and safety</h2>
+        <p>
+          See experience level, favorite routes, and verified check-ins so you can meet with
+          confidence.
+        </p>
+      </div>
+      <div class="grid three">
+        <article class="profile-card">
+          <div class="profile-top">
+            <div class="avatar">AC</div>
+            <div>
+              <h4>Ari C.</h4>
+              <p>Trail runner • Denver</p>
+            </div>
+          </div>
+          <div class="profile-tags">
+            <span>Early riser</span>
+            <span>Gear share</span>
+            <span>Verified</span>
+          </div>
+          <p class="profile-note">Wants: sunrise runs, light climbs, post-run coffee chats.</p>
+        </article>
+        <article class="profile-card">
+          <div class="profile-top">
+            <div class="avatar">MJ</div>
+            <div>
+              <h4>Maya J.</h4>
+              <p>Climber • Salt Lake</p>
+            </div>
+          </div>
+          <div class="profile-tags">
+            <span>Lead certified</span>
+            <span>Weekend trips</span>
+            <span>Safety-first</span>
+          </div>
+          <p class="profile-note">Wants: gym partners, trad lessons, and canyon picnics.</p>
+        </article>
+        <article class="profile-card">
+          <div class="profile-top">
+            <div class="avatar">RB</div>
+            <div>
+              <h4>Riley B.</h4>
+              <p>Kayaker • Portland</p>
+            </div>
+          </div>
+          <div class="profile-tags">
+            <span>Beginner friendly</span>
+            <span>Weeknights</span>
+            <span>Verified</span>
+          </div>
+          <p class="profile-note">Wants: calm water laps and mellow river weekends.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="groups" class="section alternate">
+      <div class="section-header">
+        <h2>Groups you can join right now</h2>
+        <p>Find recurring meetups, training crews, and niche adventures with trusted leaders.</p>
+      </div>
+      <div class="group-admin">
+        <div>
+          <h3>Create or manage a group</h3>
+          <p>Add admins, private forums, and calendars for each group.</p>
+        </div>
+        <form class="group-form" data-group-form>
+          <label>
+            <span>Group name</span>
+            <input type="text" name="name" placeholder="Summit & Sip Club" required />
+          </label>
+          <label>
+            <span>Focus</span>
+            <input type="text" name="focus" placeholder="Weekend hikes + coffee" required />
+          </label>
+          <label>
+            <span>Admins</span>
+            <input type="text" name="admins" placeholder="Jamie, Alex, Priya" required />
+          </label>
+          <label>
+            <span>Private forum topic</span>
+            <input type="text" name="forum" placeholder="Route swaps + carpool" required />
+          </label>
+          <label>
+            <span>Next event</span>
+            <input type="text" name="event" placeholder="Sat 7:00 AM • Bear Peak" required />
+          </label>
+          <button class="secondary" type="submit">Create group</button>
+          <p class="form-note">Group management unlocks after login.</p>
+        </form>
+      </div>
+      <div class="grid three" data-group-feed>
+        <article class="group-card">
+          <div class="group-header">
+            <div>
+              <h4>Front Range Climbers</h4>
+              <p>Weekly gym nights + weekend crag days</p>
+            </div>
+            <span class="group-tag">Climbing</span>
+          </div>
+          <ul class="group-details">
+            <li>Next meetup: Tue 6:30 PM</li>
+            <li>Members: 48</li>
+            <li>Admins: Mei L., Gabi R.</li>
+            <li>Private forum: Beta exchange</li>
+            <li>Group calendar: Shared climbs</li>
+          </ul>
+          <button class="secondary" data-scroll="#waitlist">Join group</button>
+        </article>
+        <article class="group-card">
+          <div class="group-header">
+            <div>
+              <h4>Sunrise Trail Society</h4>
+              <p>Easy-moderate hikes before work</p>
+            </div>
+            <span class="group-tag">Hiking</span>
+          </div>
+          <ul class="group-details">
+            <li>Next meetup: Wed 6:00 AM</li>
+            <li>Members: 32</li>
+            <li>Admins: Jonah P., Lila G.</li>
+            <li>Private forum: Sunrise routes</li>
+            <li>Group calendar: Weekday hikes</li>
+          </ul>
+          <button class="secondary" data-scroll="#waitlist">Request invite</button>
+        </article>
+        <article class="group-card">
+          <div class="group-header">
+            <div>
+              <h4>After-Work Paddle Club</h4>
+              <p>Lake laps, gear share, sunset hangs</p>
+            </div>
+            <span class="group-tag">Paddle</span>
+          </div>
+          <ul class="group-details">
+            <li>Next meetup: Thu 7:15 PM</li>
+            <li>Members: 21</li>
+            <li>Admins: Rhea K., Devon S.</li>
+            <li>Private forum: Lake logistics</li>
+            <li>Group calendar: Sunset sessions</li>
+          </ul>
+          <button class="secondary" data-scroll="#waitlist">Join group</button>
+        </article>
+      </div>
+    </section>
+
+    <section id="calendar" class="section">
+      <div class="section-header">
+        <h2>Plan on a shared adventure calendar</h2>
+        <p>
+          Sync group events to your personal profile calendar and keep everyone on the same
+          schedule.
+        </p>
+      </div>
+      <div class="calendar-tabs">
+        <button class="ghost" data-calendar-tab="group">Group calendars</button>
+        <button class="ghost" data-calendar-tab="friends">Friends calendar</button>
+        <button class="ghost" data-calendar-tab="private">Private profile</button>
+      </div>
+      <div class="calendar-layout">
+        <div class="calendar-card">
+          <div class="calendar-header">
+            <div>
+              <h3>August 2024</h3>
+              <p>Group calendar highlights</p>
+            </div>
+            <button class="ghost" data-scroll="#waitlist">Sync my calendar</button>
+          </div>
+          <div class="calendar-grid">
+            <div class="calendar-day">Mon</div>
+            <div class="calendar-day">Tue</div>
+            <div class="calendar-day">Wed</div>
+            <div class="calendar-day">Thu</div>
+            <div class="calendar-day">Fri</div>
+            <div class="calendar-day">Sat</div>
+            <div class="calendar-day">Sun</div>
+            <div class="calendar-cell">5</div>
+            <div class="calendar-cell">
+              6
+              <span>Climb night</span>
+            </div>
+            <div class="calendar-cell">7</div>
+            <div class="calendar-cell">
+              8
+              <span>Lake paddle</span>
+            </div>
+            <div class="calendar-cell">9</div>
+            <div class="calendar-cell">
+              10
+              <span>Trail loop</span>
+            </div>
+            <div class="calendar-cell">11</div>
+            <div class="calendar-cell">12</div>
+            <div class="calendar-cell">
+              13
+              <span>Gear swap</span>
+            </div>
+            <div class="calendar-cell">14</div>
+            <div class="calendar-cell">15</div>
+          </div>
+        </div>
+        <div class="calendar-sidebar">
+          <h4>Upcoming events</h4>
+          <div class="calendar-event">
+            <strong>Tue 6:30 PM</strong>
+            <span>Front Range Climbers • Gym session</span>
+          </div>
+          <div class="calendar-event">
+            <strong>Thu 7:15 PM</strong>
+            <span>Paddle Club • Sunset loop</span>
+          </div>
+          <div class="calendar-event">
+            <strong>Sat 8:00 AM</strong>
+            <span>Sunrise Trail Society • Falls hike</span>
+          </div>
+          <div class="calendar-note">
+            <p>Private profile calendar keeps your RSVP history and safety check-ins.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="buddies" class="section alternate">
+      <div class="section-header">
+        <h2>Adventure buddy matching that feels human</h2>
+        <p>
+          Blend personality, skill level, and timing to find the right partner, whether you want
+          a friend, a teammate, or a spark.
+        </p>
+      </div>
+      <div class="grid two">
+        <div class="feature-card">
+          <h3>Vibe-based filters</h3>
+          <p>Choose low-key, adrenaline, or family-friendly adventure styles.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Safety-first planning</h3>
+          <p>Verified profiles, check-in timers, and shareable route cards.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Adventure playlists</h3>
+          <p>Create a running list of future trips and invite new people along.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Meetups in minutes</h3>
+          <p>Post open slots for a hike and auto-match with nearby compatible folks.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="integrations" class="section">
+      <div class="section-header">
+        <h2>Designed for future integrations</h2>
+        <p>
+          Soon connect with apps like MtnProject, AllTrails, and Strava to bring your routes and
+          activity history into every match.
+        </p>
+      </div>
+      <div class="integration-row">
+        <div class="integration-card">
+          <span>MtnProject</span>
+          <p>Automatically share favorite climbs and send partner invites.</p>
+        </div>
+        <div class="integration-card">
+          <span>AllTrails</span>
+          <p>Highlight the hikes you love and plan new ones together.</p>
+        </div>
+        <div class="integration-card">
+          <span>Strava</span>
+          <p>Match with people who move at your pace and training cadence.</p>
+        </div>
+      </div>
+      <div class="roadmap">
+        <div>
+          <h3>Integration roadmap</h3>
+          <p>
+            Hook into the tools your community already uses and keep everything synced from one
+            place.
+          </p>
+        </div>
+        <ul>
+          <li>Route sync + GPX import for shared planning.</li>
+          <li>Activity summaries on profiles for better compatibility.</li>
+          <li>Auto-suggest trips based on the last 90 days of activity.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="events" class="section alternate">
+      <div class="section-header">
+        <h2>Tonight's open adventure posts</h2>
+        <p>Browse upcoming meetups and claim a spot in real time.</p>
+      </div>
+      <div class="grid three">
+        <article class="event-card">
+          <h4>Golden Gate sunrise hike</h4>
+          <p>Moderate pace • 6.2 miles • Coffee afterward</p>
+          <div class="event-meta">
+            <span>Wed 6:10 AM</span>
+            <span>3 spots left</span>
+          </div>
+        </article>
+        <article class="event-card">
+          <h4>Moonlight paddle crew</h4>
+          <p>Lake meetup • Bring headlamp • Beginners welcome</p>
+          <div class="event-meta">
+            <span>Thu 8:30 PM</span>
+            <span>5 spots left</span>
+          </div>
+        </article>
+        <article class="event-card">
+          <h4>After-work boulder session</h4>
+          <p>Gear share • Spotters on deck • Casual climb</p>
+          <div class="event-meta">
+            <span>Fri 6:00 PM</span>
+            <span>2 spots left</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="waitlist" class="section waitlist">
+      <div>
+        <h2>Join the beta waitlist</h2>
+        <p>Get early access to your city's first adventure circles.</p>
+      </div>
+      <form class="waitlist-form">
+        <label>
+          <span>Email address</span>
+          <input type="email" name="email" placeholder="you@outdoorcrew.com" required />
+        </label>
+        <label>
+          <span>Home city</span>
+          <input type="text" name="city" placeholder="Boulder, CO" required />
+        </label>
+        <button class="primary" type="submit">Reserve my spot</button>
+      </form>
+    </section>
+
+    <section class="section callout">
+      <div>
+        <h2>Ready to build the outdoors community?</h2>
+        <p>Launch-ready demo. Gather waitlist signups and start curating hubs.</p>
+      </div>
+      <button class="primary" data-scroll="#waitlist">Get the demo kit</button>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div>
+      <h4>OutdoorDating</h4>
+      <p>Match with people who love to be outside.</p>
+    </div>
+    <div class="footer-links">
+      <a href="#communities">Forums</a>
+      <a href="#buddies">Buddy Finder</a>
+      <a href="#integrations">Integrations</a>
+    </div>
+    <small>© 2024 OutdoorDating. Demo only.</small>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

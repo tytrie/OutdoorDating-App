@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OutdoorDating | Local Posts</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="hero">
+    <nav class="nav">
+      <div class="logo">
+        <span>OutdoorDating</span>
+        <small>Adventure circles</small>
+      </div>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="communities.html">Communities</a>
+        <a href="profiles.html">Profiles</a>
+        <a href="integrations.html">Integrations</a>
+        <div class="profile-menu" data-profile-menu>
+          <button class="primary" data-profile-toggle>Log in</button>
+          <div class="profile-dropdown" data-profile-dropdown>
+            <a href="profile.html">Profile</a>
+            <a href="profile.html#calendar">Calendar</a>
+            <a href="profile.html#events">Events</a>
+            <button class="ghost" type="button" data-auth-action="logout">Log out</button>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="hero-content">
+      <div>
+        <p class="eyebrow">Local front page</p>
+        <h1>Public adventure posts in your area.</h1>
+        <p class="subhead">Browse the latest open invites and join the outings that fit your vibe.</p>
+      </div>
+      <div class="hero-card">
+        <h3>Quick filters</h3>
+        <p>Find posts by activity and timing.</p>
+        <div class="pill-row">
+          <span>Hike</span>
+          <span>Climb</span>
+          <span>Bike</span>
+        </div>
+        <div class="attendees">
+          <div>
+            <strong>42 posts</strong>
+            <span>Updated hourly</span>
+          </div>
+          <button class="accent" data-scroll="#post-feed">Browse posts</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section" id="post-feed">
+      <div class="section-header">
+        <h2>Open posts</h2>
+        <p>Tap a post to see details, RSVP, and ask questions.</p>
+      </div>
+      <div class="post-grid" data-posts-feed></div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+  <script src="posts-feed.js"></script>
+</body>
+</html>

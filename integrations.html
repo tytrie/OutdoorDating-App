@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OutdoorDating | Integrations</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="hero">
+    <nav class="nav">
+      <div class="logo">
+        <span>OutdoorDating</span>
+        <small>Adventure circles</small>
+      </div>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="communities.html">Communities</a>
+        <a href="posts.html">Posts</a>
+        <a href="profiles.html">Profiles</a>
+        <div class="profile-menu" data-profile-menu>
+          <button class="primary" data-profile-toggle>Log in</button>
+          <div class="profile-dropdown" data-profile-dropdown>
+            <a href="profile.html">Profile</a>
+            <a href="profile.html#calendar">Calendar</a>
+            <a href="profile.html#events">Events</a>
+            <button class="ghost" type="button" data-auth-action="logout">Log out</button>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="hero-content">
+      <div>
+        <p class="eyebrow">Work in progress</p>
+        <h1>Integrations are coming soon.</h1>
+        <p class="subhead">Connect your favorite outdoor apps to enrich matches and planning.</p>
+        <div class="cta-row">
+          <button class="primary" data-scroll="#integration-roadmap">View roadmap</button>
+          <button class="secondary" data-scroll="#integration-wishlist">Request an integration</button>
+        </div>
+      </div>
+      <div class="hero-card">
+        <h3>Planned partners</h3>
+        <p>We are building connectors next.</p>
+        <div class="pill-row">
+          <span>MtnProject</span>
+          <span>AllTrails</span>
+          <span>Strava</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="integration-roadmap" class="section">
+      <div class="section-header">
+        <h2>Integration roadmap</h2>
+        <p>Vote and track what we are building.</p>
+      </div>
+      <div class="integration-row">
+        <div class="integration-card">
+          <span>MtnProject</span>
+          <p>Auto-import favorite climbs and partner invites.</p>
+        </div>
+        <div class="integration-card">
+          <span>AllTrails</span>
+          <p>Share saved lists and trail conditions.</p>
+        </div>
+        <div class="integration-card">
+          <span>Strava</span>
+          <p>Match based on pace and activity history.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="integration-wishlist" class="section alternate">
+      <div class="section-header">
+        <h2>Request an integration</h2>
+        <p>Tell us what you want to connect next.</p>
+      </div>
+      <form class="post-form" data-integration-form>
+        <label>
+          <span>App name</span>
+          <input type="text" name="app" placeholder="Gaia GPS" required />
+        </label>
+        <label>
+          <span>Why it matters</span>
+          <textarea name="reason" rows="3" placeholder="Sync routes and maps." required></textarea>
+        </label>
+        <button class="primary" type="submit">Submit request</button>
+      </form>
+      <div class="grid three" data-integration-feed></div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+  <script src="integrations.js"></script>
+</body>
+</html>

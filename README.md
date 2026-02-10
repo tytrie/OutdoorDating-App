@@ -1,26 +1,38 @@
-# OutdoorDating App Demo
+# OutdoorDating App
 
-A lightweight static demo for an outdoor-focused dating and friend-making app. The landing page
-highlights local community forums, adventure buddy matching, and future integrations with
-popular outdoor platforms.
+A full-stack local app prototype for an outdoor-focused dating and friend-making platform.
 
-## Getting Started
+## Run Locally (Option A: Node + Express)
 
-Open `index.html` in your browser or run a simple local server:
+1. Install dependencies:
 
 ```bash
-python -m http.server 8000
+npm install
 ```
 
-Then visit `http://localhost:8000`.
+2. Start the app server:
+
+```bash
+npm start
+```
+
+3. Open:
+
+- `http://localhost:8000/index.html`
 
 ## Demo Pages
 
-- Landing page: `http://localhost:8000/index.html`
+- Landing: `http://localhost:8000/index.html`
 - Communities: `http://localhost:8000/communities.html`
 - Posts feed: `http://localhost:8000/posts.html`
-- Profiles: `http://localhost:8000/profiles.html`
-- Group dashboard: `http://localhost:8000/groups.html`
 - Post detail: `http://localhost:8000/post.html`
+- Group dashboard: `http://localhost:8000/groups.html`
+- Profiles: `http://localhost:8000/profiles.html`
 - Profile editor: `http://localhost:8000/profile.html`
 - Integrations (WIP): `http://localhost:8000/integrations.html`
+
+## API
+
+The app now exposes real local API endpoints under `/api/*` and uses a persisted JSON datastore in:
+
+- `data/db.json`

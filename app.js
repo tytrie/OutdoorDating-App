@@ -1,281 +1,217 @@
-const buttons = document.querySelectorAll("button");
-const waitlistForm = document.querySelector(".waitlist-form");
-const authStatus = document.querySelector("[data-auth-status]");
-const logoutButton = document.querySelector("[data-auth-action=\"logout\"]");
-const postForm = document.querySelector("[data-post-form]");
-const postFeed = document.querySelector("[data-post-feed]");
-const groupForm = document.querySelector("[data-group-form]");
-const groupFeed = document.querySelector("[data-group-feed]");
-const calendarTabs = document.querySelectorAll("[data-calendar-tab]");
-const profileMenu = document.querySelector("[data-profile-menu]");
-const profileToggle = document.querySelector("[data-profile-toggle]");
-const profileDropdown = document.querySelector("[data-profile-dropdown]");
+const api = window.OutdoorApi;
 
-const storageKeys = {
-  users: "od_users",
-  session: "od_session",
-  posts: "od_posts",
-  groups: "od_groups",
+const waitlistForm = document.querySelector('.waitlist-form');
+const authStatus = document.querySelector('[data-auth-status]');
+const logoutButtons = document.querySelectorAll('[data-auth-action="logout"]');
+const profileMenu = document.querySelector('[data-profile-menu]');
+const profileToggle = document.querySelector('[data-profile-toggle]');
+const profileDropdown = document.querySelector('[data-profile-dropdown]');
+const postForm = document.querySelector('[data-post-form]');
+const postFeed = document.querySelector('[data-post-feed]');
+const groupForm = document.querySelector('[data-group-form]');
+const groupFeed = document.querySelector('[data-group-feed]');
+
+const scrollHandler = (event) => {
+  const btn = event.target.closest('button[data-scroll]');
+  if (!btn) return;
+  const target = document.querySelector(btn.dataset.scroll);
+  if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
 };
+document.addEventListener('click', scrollHandler);
 
-const getStored = (key, fallback) => {
-  const raw = window.localStorage.getItem(key);
-  if (!raw) return fallback;
-  try {
-    return JSON.parse(raw);
-  } catch (error) {
-    return fallback;
+const session = () => api.getSession();
+
+const renderAuth = () => {
+  const user = session();
+  if (authStatus) authStatus.textContent = user ? `${user.name} (${user.email})` : 'Guest';
+  if (profileToggle && profileMenu) {
+    profileToggle.textContent = user ? 'Profile' : 'Log in';
+    profileMenu.classList.toggle('is-logged-out', !user);
+    if (!user) profileMenu.classList.remove('open');
   }
 };
-
-const setStored = (key, value) => {
-  window.localStorage.setItem(key, JSON.stringify(value));
-};
-
-const getSession = () => getStored(storageKeys.session, null);
-const setSession = (session) => setStored(storageKeys.session, session);
-
-const renderAuthStatus = () => {
-  if (!authStatus) return;
-  const session = getSession();
-  authStatus.textContent = session ? `${session.name} (${session.email})` : "Guest";
-};
-
-const renderProfileMenu = () => {
-  if (!profileMenu || !profileToggle) return;
-  const session = getSession();
-  if (session) {
-    profileToggle.textContent = "Profile";
-    profileMenu.classList.remove("is-logged-out");
-  } else {
-    profileToggle.textContent = "Log in";
-    profileMenu.classList.add("is-logged-out");
-    profileMenu.classList.remove("open");
-  }
-};
-
-const handleScroll = (event) => {
-  const targetButton = event.target.closest("button");
-  if (!targetButton) return;
-  const scrollTarget = targetButton.dataset.scroll;
-  if (!scrollTarget) return;
-  const target = document.querySelector(scrollTarget);
-  if (!target) return;
-  target.scrollIntoView({ behavior: "smooth", block: "start" });
-};
-
-document.addEventListener("click", handleScroll);
 
 if (profileToggle && profileMenu) {
-  profileToggle.addEventListener("click", (event) => {
-    const session = getSession();
-    if (!session) {
-      const loginSection = document.querySelector("#login");
-      if (loginSection) {
-        loginSection.scrollIntoView({ behavior: "smooth", block: "start" });
-      } else {
-        window.location.href = "index.html#login";
-      }
+  profileToggle.addEventListener('click', (event) => {
+    const user = session();
+    if (!user) {
+      const login = document.querySelector('#login');
+      if (login) login.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      else window.location.href = 'index.html#login';
       return;
     }
     event.stopPropagation();
-    profileMenu.classList.toggle("open");
+    profileMenu.classList.toggle('open');
+  });
+  document.addEventListener('click', (event) => {
+    if (!profileMenu || !profileDropdown) return;
+    if (!profileMenu.contains(event.target)) profileMenu.classList.remove('open');
   });
 }
 
-document.addEventListener("click", (event) => {
-  if (!profileMenu || !profileDropdown) return;
-  if (!profileMenu.contains(event.target)) {
-    profileMenu.classList.remove("open");
-  }
+document.querySelectorAll('[data-auth]').forEach((form) => {
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    try {
+      const fd = new FormData(form);
+      if (form.dataset.auth === 'register') {
+        const data = await api.register({
+          name: String(fd.get('name')).trim(),
+          email: String(fd.get('email')).trim().toLowerCase(),
+          password: String(fd.get('password')).trim()
+        });
+        api.setAuth(data.token, data.user);
+        alert('Account created.');
+      } else {
+        const data = await api.login({
+          email: String(fd.get('email')).trim().toLowerCase(),
+          password: String(fd.get('password')).trim()
+        });
+        api.setAuth(data.token, data.user);
+        alert('Welcome back.');
+      }
+      form.reset();
+      renderAuth();
+      renderPosts();
+      renderGroups();
+    } catch (error) {
+      alert(error.message);
+    }
+  });
 });
 
-buttons.forEach((button) => {
-  const alertMessage = button.dataset.alert;
-  if (alertMessage) {
-    button.addEventListener("click", () => {
-      window.alert(alertMessage);
-    });
-  }
+logoutButtons.forEach((button) => {
+  button.addEventListener('click', () => {
+    api.clearAuth();
+    renderAuth();
+    alert('Logged out.');
+  });
 });
 
 if (waitlistForm) {
-  waitlistForm.addEventListener("submit", (event) => {
+  waitlistForm.addEventListener('submit', (event) => {
     event.preventDefault();
-    const formData = new FormData(waitlistForm);
-    const email = formData.get("email");
-    const city = formData.get("city");
-    window.alert(`Thanks ${email}! We'll ping you when ${city} goes live.`);
+    const fd = new FormData(waitlistForm);
+    alert(`Thanks ${fd.get('email')}! We'll ping you when ${fd.get('city')} goes live.`);
     waitlistForm.reset();
   });
 }
 
 const requireAuth = () => {
-  const session = getSession();
-  if (!session) {
-    window.alert("Please log in or create an account to use this feature.");
-    return null;
+  if (!session()) {
+    alert('Please log in first.');
+    return false;
   }
-  return session;
+  return true;
 };
 
-document.querySelectorAll("[data-auth]").forEach((form) => {
-  form.addEventListener("submit", (event) => {
-    event.preventDefault();
-    const formData = new FormData(form);
-    const email = String(formData.get("email")).trim().toLowerCase();
-    const password = String(formData.get("password")).trim();
-    if (form.dataset.auth === "register") {
-      const name = String(formData.get("name")).trim();
-      const users = getStored(storageKeys.users, []);
-      if (users.some((user) => user.email === email)) {
-        window.alert("That email already has an account.");
-        return;
-      }
-      users.push({ name, email, password });
-      setStored(storageKeys.users, users);
-      setSession({ name, email });
-      form.reset();
-      renderAuthStatus();
-      renderProfileMenu();
-      window.alert("Account created! You are now logged in.");
-      return;
-    }
-    const users = getStored(storageKeys.users, []);
-    const match = users.find((user) => user.email === email && user.password === password);
-    if (!match) {
-      window.alert("Login failed. Check your email or password.");
-      return;
-    }
-    setSession({ name: match.name, email: match.email });
-    form.reset();
-    renderAuthStatus();
-    renderProfileMenu();
-    window.alert("Welcome back!");
-  });
-});
-
-if (logoutButton) {
-  logoutButton.addEventListener("click", () => {
-    setSession(null);
-    renderAuthStatus();
-    renderProfileMenu();
-    window.alert("You have been logged out.");
-  });
-}
-
-const renderPosts = () => {
+async function renderPosts() {
   if (!postFeed) return;
-  postFeed.querySelectorAll("[data-user-post]").forEach((node) => node.remove());
-  const posts = getStored(storageKeys.posts, []);
-  posts.forEach((post) => {
-    const card = document.createElement("article");
-    card.className = "post-card";
-    card.dataset.userPost = "true";
-    const postLink = `post.html?title=${encodeURIComponent(post.title)}`;
-    card.innerHTML = `
-      <div class="post-header">
-        <div>
-          <h4>${post.title}</h4>
-          <p>${post.when} • ${post.location}</p>
+  postFeed.querySelectorAll('[data-user-post]').forEach((n) => n.remove());
+  try {
+    const data = await api.listPosts();
+    data.posts.forEach((post) => {
+      const card = document.createElement('article');
+      card.className = 'post-card';
+      card.dataset.userPost = 'true';
+      card.innerHTML = `
+        <div class="post-header">
+          <div>
+            <h4>${post.title}</h4>
+            <p>${post.when} • ${post.location}</p>
+          </div>
+          <span class="post-tag">${post.activity}</span>
         </div>
-        <span class="post-tag">${post.activity}</span>
-      </div>
-      <p class="post-body">${post.details}</p>
-      <div class="post-footer">
-        <div>
-          <strong>${post.spots} spots open</strong>
-          <span>Posted by ${post.author}</span>
+        <p class="post-body">${post.details}</p>
+        <div class="post-footer">
+          <div>
+            <strong>${post.spots} spots open</strong>
+            <span>Posted by ${post.author}</span>
+          </div>
+          <a class="secondary button-link" href="post.html?id=${post.id}">Open post</a>
         </div>
-        <a class="secondary button-link" href="${postLink}">Open post</a>
-      </div>
-    `;
-    postFeed.prepend(card);
-  });
-};
+      `;
+      postFeed.prepend(card);
+    });
+  } catch {
+    // no-op
+  }
+}
 
 if (postForm) {
-  postForm.addEventListener("submit", (event) => {
+  postForm.addEventListener('submit', async (event) => {
     event.preventDefault();
-    const session = requireAuth();
-    if (!session) return;
-    const formData = new FormData(postForm);
-    const post = {
-      title: String(formData.get("title")).trim(),
-      activity: String(formData.get("activity")),
-      when: String(formData.get("when")).trim(),
-      spots: String(formData.get("spots")).trim(),
-      location: String(formData.get("location")).trim(),
-      details: String(formData.get("details")).trim(),
-      author: session.name,
-    };
-    const posts = getStored(storageKeys.posts, []);
-    posts.unshift(post);
-    setStored(storageKeys.posts, posts);
-    postForm.reset();
-    renderPosts();
+    if (!requireAuth()) return;
+    try {
+      const fd = new FormData(postForm);
+      await api.createPost({
+        title: String(fd.get('title')).trim(),
+        activity: String(fd.get('activity')).trim(),
+        when: String(fd.get('when')).trim(),
+        location: String(fd.get('location')).trim(),
+        spots: Number(fd.get('spots')),
+        details: String(fd.get('details')).trim()
+      });
+      postForm.reset();
+      renderPosts();
+    } catch (error) {
+      alert(error.message);
+    }
   });
 }
 
-const renderGroups = () => {
+async function renderGroups() {
   if (!groupFeed) return;
-  groupFeed.querySelectorAll("[data-user-group]").forEach((node) => node.remove());
-  const groups = getStored(storageKeys.groups, []);
-  groups.forEach((group) => {
-    const card = document.createElement("article");
-    card.className = "group-card";
-    card.dataset.userGroup = "true";
-    const groupLink = `groups.html?name=${encodeURIComponent(group.name)}`;
-    card.innerHTML = `
-      <div class="group-header">
-        <div>
-          <h4>${group.name}</h4>
-          <p>${group.focus}</p>
+  groupFeed.querySelectorAll('[data-user-group]').forEach((n) => n.remove());
+  try {
+    const data = await api.listGroups();
+    data.groups.forEach((group) => {
+      const card = document.createElement('article');
+      card.className = 'group-card';
+      card.dataset.userGroup = 'true';
+      card.innerHTML = `
+        <div class="group-header">
+          <div>
+            <h4>${group.name}</h4>
+            <p>${group.focus}</p>
+          </div>
+          <span class="group-tag">Custom</span>
         </div>
-        <span class="group-tag">Custom</span>
-      </div>
-      <ul class="group-details">
-        <li>Next meetup: ${group.event}</li>
-        <li>Admins: ${group.admins}</li>
-        <li>Private forum: ${group.forum}</li>
-        <li>Group calendar: Connected</li>
-      </ul>
-      <a class="secondary button-link" href="${groupLink}">View group</a>
-    `;
-    groupFeed.prepend(card);
-  });
-};
+        <ul class="group-details">
+          <li>Members: ${group.members.length}</li>
+          <li>Admins: ${group.admins.join(', ')}</li>
+          <li>Private forum: ${group.forum || 'General'}</li>
+        </ul>
+        <a class="secondary button-link" href="groups.html?id=${group.id}">View group</a>
+      `;
+      groupFeed.prepend(card);
+    });
+  } catch {
+    // no-op
+  }
+}
 
 if (groupForm) {
-  groupForm.addEventListener("submit", (event) => {
+  groupForm.addEventListener('submit', async (event) => {
     event.preventDefault();
-    const session = requireAuth();
-    if (!session) return;
-    const formData = new FormData(groupForm);
-    const group = {
-      name: String(formData.get("name")).trim(),
-      focus: String(formData.get("focus")).trim(),
-      admins: String(formData.get("admins")).trim(),
-      forum: String(formData.get("forum")).trim(),
-      event: String(formData.get("event")).trim(),
-      createdBy: session.email,
-    };
-    const groups = getStored(storageKeys.groups, []);
-    groups.unshift(group);
-    setStored(storageKeys.groups, groups);
-    groupForm.reset();
-    renderGroups();
+    if (!requireAuth()) return;
+    try {
+      const fd = new FormData(groupForm);
+      await api.createGroup({
+        name: String(fd.get('name')).trim(),
+        focus: String(fd.get('focus')).trim(),
+        admins: String(fd.get('admins')).trim(),
+        forum: String(fd.get('forum')).trim(),
+        event: String(fd.get('event')).trim()
+      });
+      groupForm.reset();
+      renderGroups();
+    } catch (error) {
+      alert(error.message);
+    }
   });
 }
 
-calendarTabs.forEach((tab) => {
-  tab.addEventListener("click", () => {
-    calendarTabs.forEach((button) => button.classList.remove("active"));
-    tab.classList.add("active");
-  });
-});
-
-renderAuthStatus();
-renderProfileMenu();
+renderAuth();
 renderPosts();
 renderGroups();

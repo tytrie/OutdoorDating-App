@@ -1,51 +1,33 @@
-const form = document.querySelector("[data-integration-form]");
-const feed = document.querySelector("[data-integration-feed]");
+const api = window.OutdoorApi;
+const form = document.querySelector('[data-integration-form]');
+const feed = document.querySelector('[data-integration-feed]');
 
-const getStored = (key, fallback) => {
-  const raw = window.localStorage.getItem(key);
-  if (!raw) return fallback;
-  try {
-    return JSON.parse(raw);
-  } catch (error) {
-    return fallback;
-  }
-};
-
-const setStored = (key, value) => {
-  window.localStorage.setItem(key, JSON.stringify(value));
-};
-
-const key = "od_integration_requests";
-
-const renderRequests = () => {
+const render = (requests) => {
   if (!feed) return;
-  feed.innerHTML = "";
-  const requests = getStored(key, []);
+  feed.innerHTML = '';
   requests.forEach((request) => {
-    const card = document.createElement("article");
-    card.className = "feature-card";
-    card.innerHTML = `
-      <h3>${request.app}</h3>
-      <p>${request.reason}</p>
-    `;
+    const card = document.createElement('article');
+    card.className = 'feature-card';
+    card.innerHTML = `<h3>${request.app}</h3><p>${request.reason}</p><p>By ${request.by || 'community'}</p>`;
     feed.append(card);
   });
 };
 
-if (form) {
-  form.addEventListener("submit", (event) => {
-    event.preventDefault();
-    const formData = new FormData(form);
-    const request = {
-      app: String(formData.get("app")).trim(),
-      reason: String(formData.get("reason")).trim(),
-    };
-    const requests = getStored(key, []);
-    requests.unshift(request);
-    setStored(key, requests);
-    form.reset();
-    renderRequests();
-  });
-}
+const load = async () => {
+  const data = await api.integrationRequests();
+  render(data.requests);
+};
 
-renderRequests();
+form?.addEventListener('submit', async (event) => {
+  event.preventDefault();
+  try {
+    const fd = new FormData(form);
+    await api.createIntegrationRequest({ app: String(fd.get('app')).trim(), reason: String(fd.get('reason')).trim() });
+    form.reset();
+    await load();
+  } catch (error) {
+    alert(error.message);
+  }
+});
+
+load().catch(() => {});

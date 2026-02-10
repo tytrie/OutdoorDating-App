@@ -67,10 +67,46 @@
         <h2>Open posts</h2>
         <p>Tap a post to see details, RSVP, and ask questions.</p>
       </div>
+      <form class="post-form" data-post-form>
+        <div class="form-grid">
+          <label>
+            <span>Title</span>
+            <input type="text" name="title" placeholder="Sunrise ridge run" required />
+          </label>
+          <label>
+            <span>Activity</span>
+            <select name="activity" required>
+              <option value="Hike">Hike</option>
+              <option value="Climb">Climb</option>
+              <option value="Bike">Bike</option>
+              <option value="Paddle">Paddle</option>
+              <option value="Run">Run</option>
+            </select>
+          </label>
+          <label>
+            <span>Location</span>
+            <input type="text" name="location" placeholder="Chautauqua trailhead" required />
+          </label>
+          <label>
+            <span>When</span>
+            <input type="text" name="when" placeholder="Sat 6:30 AM" required />
+          </label>
+          <label>
+            <span>Spots</span>
+            <input type="number" name="spots" placeholder="4" min="1" required />
+          </label>
+        </div>
+        <label>
+          <span>Details</span>
+          <textarea name="details" rows="3" placeholder="Route notes, pace, gear, vibe." required></textarea>
+        </label>
+        <button class="primary" type="submit">Post adventure</button>
+      </form>
       <div class="post-grid" data-posts-feed></div>
     </section>
   </main>
 
+  <script src="client-api.js"></script>
   <script src="app.js"></script>
   <script src="posts-feed.js"></script>
 </body>

@@ -1,0 +1,12 @@
+{
+  "users": [],
+  "profiles": {},
+  "posts": [],
+  "groups": [],
+  "communities": [
+    { "id": "denver", "name": "Denver, CO", "activity": "Trail running + climbing", "members": 420 },
+    { "id": "portland", "name": "Portland, OR", "activity": "Hikes + paddling", "members": 310 },
+    { "id": "austin", "name": "Austin, TX", "activity": "Cycling + swimming", "members": 275 }
+  ],
+  "integrationRequests": []
+}

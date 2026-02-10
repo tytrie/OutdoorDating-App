@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OutdoorDating | Profiles</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="hero">
+    <nav class="nav">
+      <div class="logo">
+        <span>OutdoorDating</span>
+        <small>Adventure circles</small>
+      </div>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="communities.html">Communities</a>
+        <a href="posts.html">Posts</a>
+        <a href="integrations.html">Integrations</a>
+        <div class="profile-menu" data-profile-menu>
+          <button class="primary" data-profile-toggle>Log in</button>
+          <div class="profile-dropdown" data-profile-dropdown>
+            <a href="profile.html">Profile</a>
+            <a href="profile.html#calendar">Calendar</a>
+            <a href="profile.html#events">Events</a>
+            <button class="ghost" type="button" data-auth-action="logout">Log out</button>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="hero-content">
+      <div>
+        <p class="eyebrow">Adventure buddies</p>
+        <h1>Swipe to meet new friends.</h1>
+        <p class="subhead">Like, pass, and connect with outdoor lovers nearby.</p>
+        <div class="cta-row">
+          <button class="primary" data-scroll="#profile-stack">Start swiping</button>
+          <a class="secondary button-link" href="profile.html">Edit my profile</a>
+        </div>
+      </div>
+      <div class="hero-card">
+        <h3>Swipe stats</h3>
+        <p data-swipe-status>0 likes • 0 passes</p>
+        <div class="pill-row">
+          <span>Friends</span>
+          <span>Adventure partners</span>
+          <span>Local meetups</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="profile-stack" class="section">
+      <div class="section-header">
+        <h2>Suggested profiles</h2>
+        <p>Tell us who you want to meet and we will refine the list.</p>
+      </div>
+      <div class="grid three" data-profile-feed></div>
+    </section>
+  </main>
+
+  <script src="client-api.js"></script>
+  <script src="app.js"></script>
+  <script src="profiles.js"></script>
+</body>
+</html>

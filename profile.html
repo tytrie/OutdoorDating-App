@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OutdoorDating | My Profile</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="hero">
+    <nav class="nav">
+      <div class="logo">
+        <span>OutdoorDating</span>
+        <small>Adventure circles</small>
+      </div>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="communities.html">Communities</a>
+        <a href="posts.html">Posts</a>
+        <a href="profiles.html">Profiles</a>
+        <div class="profile-menu" data-profile-menu>
+          <button class="primary" data-profile-toggle>Profile</button>
+          <div class="profile-dropdown" data-profile-dropdown>
+            <a href="#calendar">Calendar</a>
+            <a href="#events">Events</a>
+            <button class="ghost" type="button" data-auth-action="logout">Log out</button>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="hero-content">
+      <div>
+        <p class="eyebrow">My profile</p>
+        <h1 data-profile-name>Adventure profile</h1>
+        <p class="subhead" data-profile-bio>Update your info to help matches find you.</p>
+        <div class="cta-row">
+          <button class="primary" data-scroll="#edit-profile">Edit profile</button>
+          <button class="secondary" data-scroll="#calendar">My calendar</button>
+        </div>
+      </div>
+      <div class="hero-card">
+        <h3>Profile highlights</h3>
+        <p data-profile-location>Location: Unknown</p>
+        <div class="pill-row" data-profile-tags></div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="edit-profile" class="section">
+      <div class="section-header">
+        <h2>Edit your profile</h2>
+        <p>Update your info so adventure buddies know what you love.</p>
+      </div>
+      <form class="post-form" data-profile-form>
+        <div class="form-grid">
+          <label>
+            <span>Name</span>
+            <input type="text" name="name" placeholder="Jamie Trailblazer" required />
+          </label>
+          <label>
+            <span>Location</span>
+            <input type="text" name="location" placeholder="Boulder, CO" required />
+          </label>
+          <label>
+            <span>Top activities</span>
+            <input type="text" name="activities" placeholder="Hiking, climbing, paddle" required />
+          </label>
+          <label>
+            <span>Availability</span>
+            <input type="text" name="availability" placeholder="Weekends + early mornings" required />
+          </label>
+        </div>
+        <label>
+          <span>Bio</span>
+          <textarea name="bio" rows="3" placeholder="Share your adventure vibe." required></textarea>
+        </label>
+        <button class="primary" type="submit">Save profile</button>
+      </form>
+    </section>
+
+    <section id="calendar" class="section alternate">
+      <div class="section-header">
+        <h2>My calendar</h2>
+        <p>Group events you add show up here for quick planning.</p>
+      </div>
+      <div class="calendar-layout">
+        <div class="calendar-card">
+          <div class="calendar-header">
+            <div>
+              <h3 data-calendar-month>Upcoming events</h3>
+              <p>Your personal adventure calendar</p>
+            </div>
+            <button class="ghost" data-scroll="#events">Add from groups</button>
+          </div>
+          <div class="calendar-grid" data-profile-calendar></div>
+        </div>
+        <div class="calendar-sidebar">
+          <h4>Saved events</h4>
+          <div data-profile-events></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="events" class="section">
+      <div class="section-header">
+        <h2>Saved events</h2>
+        <p>Quick-add group events from your group pages and manage them here.</p>
+      </div>
+      <div class="post-grid" data-profile-event-list></div>
+    </section>
+  </main>
+
+  <script src="client-api.js"></script>
+  <script src="app.js"></script>
+  <script src="profile.js"></script>
+</body>
+</html>

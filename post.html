@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OutdoorDating | Post Detail</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="hero">
+    <nav class="nav">
+      <div class="logo">
+        <span>OutdoorDating</span>
+        <small>Adventure circles</small>
+      </div>
+      <div class="nav-links">
+        <a href="posts.html">Back to posts</a>
+        <a href="communities.html#groups">Groups</a>
+        <button class="ghost" data-scroll="#post-interaction">Jump to interactions</button>
+        <div class="profile-menu" data-profile-menu>
+          <button class="primary" data-profile-toggle>Log in</button>
+          <div class="profile-dropdown" data-profile-dropdown>
+            <a href="profile.html">Profile</a>
+            <a href="profile.html#calendar">Calendar</a>
+            <a href="profile.html#events">Events</a>
+            <button class="ghost" type="button" data-auth-action="logout">Log out</button>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="hero-content">
+      <div>
+        <p class="eyebrow">Adventure post</p>
+        <h1 data-post-title>Post title</h1>
+        <p class="subhead" data-post-meta>Details appear here.</p>
+        <div class="cta-row">
+          <button class="primary" data-post-action="join">Join this adventure</button>
+          <button class="secondary" data-scroll="#post-comments">Ask a question</button>
+        </div>
+      </div>
+      <div class="hero-card">
+        <h3>Post summary</h3>
+        <p data-post-summary>Local adventure with flexible timing.</p>
+        <div class="pill-row">
+          <span data-post-spots>Spots open: 0</span>
+          <span data-post-activity>Activity</span>
+          <span data-post-author>Host</span>
+        </div>
+        <div class="attendees">
+          <div>
+            <strong data-post-time>Time</strong>
+            <span data-post-location>Location</span>
+          </div>
+          <button class="accent" data-post-action="save">Save</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="post-interaction" class="section">
+      <div class="section-header">
+        <h2>Interaction center</h2>
+        <p>Track RSVPs, comments, and reactions in one place.</p>
+      </div>
+      <div class="grid two">
+        <article class="feature-card">
+          <h3>RSVPs</h3>
+          <p data-post-rsvps>No RSVPs yet.</p>
+          <button class="secondary" data-post-action="join">RSVP</button>
+        </article>
+        <article class="feature-card">
+          <h3>Reactions</h3>
+          <p data-post-likes>0 likes</p>
+          <button class="secondary" data-post-action="like">Like this post</button>
+        </article>
+      </div>
+    </section>
+
+    <section id="post-edit" class="section alternate">
+      <div class="section-header">
+        <h2>Edit this post</h2>
+        <p>Update details after the fact and keep everyone in sync.</p>
+      </div>
+      <form class="post-form" data-edit-form>
+        <div class="form-grid">
+          <label>
+            <span>Title</span>
+            <input type="text" name="title" required />
+          </label>
+          <label>
+            <span>Activity</span>
+            <input type="text" name="activity" required />
+          </label>
+          <label>
+            <span>When</span>
+            <input type="text" name="when" required />
+          </label>
+          <label>
+            <span>Location</span>
+            <input type="text" name="location" required />
+          </label>
+          <label>
+            <span>Spots</span>
+            <input type="number" name="spots" min="1" required />
+          </label>
+        </div>
+        <label>
+          <span>Details</span>
+          <textarea name="details" rows="3" required></textarea>
+        </label>
+        <button class="primary" type="submit">Save changes</button>
+      </form>
+    </section>
+
+    <section id="post-comments" class="section alternate">
+      <div class="section-header">
+        <h2>Questions & comments</h2>
+        <p>Chat with the host and coordinate logistics.</p>
+      </div>
+      <form class="post-form" data-comment-form>
+        <label>
+          <span>Your question</span>
+          <textarea name="comment" rows="3" placeholder="Is this beginner friendly?" required></textarea>
+        </label>
+        <button class="primary" type="submit">Post comment</button>
+      </form>
+      <div class="post-grid" data-comment-feed></div>
+    </section>
+  </main>
+
+  <script src="client-api.js"></script>
+  <script src="app.js"></script>
+  <script src="posts.js"></script>
+</body>
+</html>

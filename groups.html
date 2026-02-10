@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OutdoorDating | Group Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="hero">
+    <nav class="nav">
+      <div class="logo">
+        <span>OutdoorDating</span>
+        <small>Adventure circles</small>
+      </div>
+      <div class="nav-links">
+        <a href="communities.html#groups">Back to communities</a>
+        <a href="profile.html#calendar">My calendar</a>
+        <button class="ghost" data-scroll="#group-dashboard">Jump to dashboard</button>
+        <div class="profile-menu" data-profile-menu>
+          <button class="primary" data-profile-toggle>Log in</button>
+          <div class="profile-dropdown" data-profile-dropdown>
+            <a href="profile.html">Profile</a>
+            <a href="profile.html#calendar">Calendar</a>
+            <a href="profile.html#events">Events</a>
+            <button class="ghost" type="button" data-auth-action="logout">Log out</button>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="hero-content">
+      <div>
+        <p class="eyebrow">Group dashboard</p>
+        <h1 data-group-title>Group name</h1>
+        <p class="subhead" data-group-description>
+          Manage admins, private forums, and shared calendars with your crew.
+        </p>
+        <div class="cta-row">
+          <button class="primary" data-scroll="#group-events">Add event</button>
+          <button class="secondary" data-scroll="#group-admins">Invite admin</button>
+        </div>
+      </div>
+      <div class="hero-card">
+        <h3>Group highlights</h3>
+        <p data-group-focus>Weekly meetups and special trips.</p>
+        <div class="pill-row">
+          <span data-group-members>Members: 0</span>
+          <span data-group-calendar>Calendar: Connected</span>
+          <span data-group-forum>Forum: Private</span>
+        </div>
+        <div class="attendees">
+          <div>
+            <strong data-group-next-event>Next: Not scheduled</strong>
+            <span data-group-admins>Admins: TBD</span>
+          </div>
+          <button class="accent" data-scroll="#group-events">Plan event</button>
+        </div>
+        <div class="cta-row">
+          <button class="secondary" data-group-join>Join group</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="group-dashboard" class="section" data-admin-only>
+      <div class="section-header">
+        <h2>Group controls</h2>
+        <p>Keep everything in sync for your group members.</p>
+      </div>
+      <div class="grid two">
+        <article class="feature-card">
+          <h3>Admins & permissions</h3>
+          <p>Assign co-leads to manage events, forums, and safety check-ins.</p>
+          <button class="secondary" data-scroll="#group-admins">Manage admins</button>
+        </article>
+        <article class="feature-card">
+          <h3>Private forum</h3>
+          <p>Create topics for logistics, gear shares, and route suggestions.</p>
+          <button class="secondary" data-scroll="#group-forum">Open forum</button>
+        </article>
+      </div>
+    </section>
+
+    <section id="group-admins" class="section alternate" data-admin-only>
+      <div class="section-header">
+        <h2>Admins & organizers</h2>
+        <p>Track who can post updates and approve members.</p>
+      </div>
+      <form class="group-form" data-admin-form>
+        <label>
+          <span>Admin name</span>
+          <input type="text" name="admin" placeholder="Morgan Peak" required />
+        </label>
+        <label>
+          <span>Role</span>
+          <input type="text" name="role" placeholder="Lead organizer" required />
+        </label>
+        <button class="secondary" type="submit">Add admin</button>
+      </form>
+      <div class="grid three" data-admin-feed></div>
+    </section>
+
+    <section id="group-events" class="section">
+      <div class="section-header">
+        <h2>Group calendar & events</h2>
+        <p>Create events that sync to group and private profile calendars.</p>
+      </div>
+      <form class="post-form" data-event-form data-admin-only>
+        <div class="form-grid">
+          <label>
+            <span>Event title</span>
+            <input type="text" name="title" placeholder="Sunset ridge walk" required />
+          </label>
+          <label>
+            <span>Date + time</span>
+            <input type="text" name="time" placeholder="Fri 6:00 PM" required />
+          </label>
+          <label>
+            <span>Location</span>
+            <input type="text" name="location" placeholder="North trailhead" required />
+          </label>
+          <label>
+            <span>Visibility</span>
+            <select name="visibility" required>
+              <option value="Group">Group</option>
+              <option value="Friends">Friends</option>
+              <option value="Private">Private profile</option>
+            </select>
+          </label>
+        </div>
+        <label>
+          <span>Notes</span>
+          <textarea name="notes" rows="3" placeholder="Gear notes, carpool info." required></textarea>
+        </label>
+        <button class="primary" type="submit">Add event</button>
+      </form>
+      <div class="post-grid" data-event-feed></div>
+      <form class="post-form" data-event-comment-form>
+        <label>
+          <span>Comment on events</span>
+          <textarea name="comment" rows="3" placeholder="Ask about gear, timing, or carpool." required></textarea>
+        </label>
+        <button class="secondary" type="submit">Post comment</button>
+      </form>
+      <div class="post-grid" data-event-comment-feed></div>
+    </section>
+
+    <section id="group-forum" class="section alternate" data-admin-only>
+      <div class="section-header">
+        <h2>Private forum topics</h2>
+        <p>Keep logistics, route ideas, and gear discussions in one place.</p>
+      </div>
+      <form class="post-form" data-forum-form>
+        <div class="form-grid">
+          <label>
+            <span>Topic</span>
+            <input type="text" name="topic" placeholder="Route suggestions" required />
+          </label>
+          <label>
+            <span>Category</span>
+            <input type="text" name="category" placeholder="Planning" required />
+          </label>
+        </div>
+        <label>
+          <span>First post</span>
+          <textarea name="message" rows="3" placeholder="Share your idea..." required></textarea>
+        </label>
+        <button class="secondary" type="submit">Create topic</button>
+      </form>
+      <div class="grid three" data-forum-feed></div>
+    </section>
+  </main>
+
+  <script src="client-api.js"></script>
+  <script src="app.js"></script>
+  <script src="groups.js"></script>
+</body>
+</html>
